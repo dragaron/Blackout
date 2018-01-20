@@ -17,7 +17,7 @@ SELECT: Show/hide solution for puzzles that have been completed in less than 999
 START: Reset the current puzzle  
 
 ### MISC  
-- Blackout creates a "config.ini" file upon first startup which is used to store settings; do not modify this file  
+- Blackout creates a 'config.ini' file upon first startup which is used to store settings; do not modify this file  
 - When "Show solution" is enabled, touch each outlined (in yellow) light once to complete the puzzle  
 - All assets for the game were custom-made using Gimp and Audacity  
 
