@@ -6,6 +6,9 @@
 ---------------------------------------------------------------------------------------------------
 --INITIALIZATION START-----------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------
+--Load default palette
+color.loadpalette()
+
 	--Setup directory
 	if files.exists("samples/blackout.lua") then
 	dir = "samples/blackout/"
@@ -16,21 +19,25 @@
 	--Read from, or create if nonexistent, "config.ini" file
 	if files.exists(dir .. "config.ini") then
 	current_puzzle = tonumber(ini.read(dir .. "config.ini", "current_puzzle", 1))
+	show_solution = tonumber(ini.read(dir .. "config.ini", "show_solution", 0))	
 	puzzle_record = {}
 		for i = 1, 50 do
 		puzzle_record[i] = tonumber(ini.read(dir .. "config.ini", "puzzle_record[" .. i .. "]", 999))
 		end
-	show_solution = tonumber(ini.read(dir .. "config.ini", "show_solution", 0))
 	else
 	ini.write(dir .. "config.ini", "current_puzzle", 1)
 	current_puzzle = tonumber(ini.read(dir .. "config.ini", "current_puzzle", 1))
+	ini.write(dir .. "config.ini", "show_solution", 0)
+	show_solution = tonumber(ini.read(dir .. "config.ini", "show_solution", 0))	
 	puzzle_record = {}
 		for i = 1, 50 do
+		screen.print(160, 230, "Please wait while the 'config.ini' file is created (only happens once)...")
+		draw.rect(160, 260, 52, 20, color.white)
+		draw.fillrect(161, 261, i-1, 18, color.gray)
+		screen.flip()
 		puzzle_record[i] = 999
 		ini.write(dir .. "config.ini", "puzzle_record[" .. i .. "]", puzzle_record[i])
 		end
-	ini.write(dir .. "config.ini", "show_solution", 0)
-	show_solution = tonumber(ini.read(dir .. "config.ini", "show_solution", 0))
 	end
 
 
@@ -430,7 +437,7 @@ load_puzzle()
 		if puzzle_record[current_puzzle] < 999 then
 		screen.print(BAUHS93, 700, 44, "COMPLETE", 1.1, col_fg)
 		end
-	screen:flip()
+	screen.flip()
 		if buttons.l then
 		current_puzzle -= 1
 			if current_puzzle <= 0 then
